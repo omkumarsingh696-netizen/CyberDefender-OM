@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Awareness | CyberDefender OM</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card awareness-card">
+            <div class="auth-header">
+                <div class="auth-icon">📚</div>
+                <h1>PHISHING AWARENESS</h1>
+                <p>Red flags jo aapko pata hone chahiye</p>
+            </div>
+
+            <div class="awareness-content">
+                <div class="awareness-section">
+                    <h3>🔗 1. URL Red Flags</h3>
+                    <ul>
+                        <li><strong>Spelling mistakes:</strong> instagarm.com, arnazon.com</li>
+                        <li><strong>Suspicious extensions:</strong> .xyz, .tk, .ml, .cf, .ga</li>
+                        <li><strong>Extra hyphens:</strong> instagram-login-verify.com</li>
+                        <li><strong>Subdomains:</strong> instagram.com.fake-site.xyz</li>
+                        <li><strong>Missing HTTPS:</strong> http:// instead of https://</li>
+                    </ul>
+                </div>
+
+                <div class="awareness-section">
+                    <h3>📧 2. Email Red Flags</h3>
+                    <ul>
+                        <li><strong>Urgency:</strong> "Account blocked in 24 hours"</li>
+                        <li><strong>Generic greeting:</strong> "Dear User" instead of name</li>
+                        <li><strong>Suspicious sender:</strong> support@amaz0n.com (zero)</li>
+                        <li><strong>Ask for password:</strong> Legit companies never ask</li>
+                        <li><strong>Suspicious links:</strong> Hover to see actual URL</li>
+                    </ul>
+                </div>
+
+                <div class="awareness-section">
+                    <h3>💬 3. SMS/WhatsApp Red Flags</h3>
+                    <ul>
+                        <li><strong>Lottery/Prize:</strong> "You won Rs 50,000!"</li>
+                        <li><strong>KYC update:</strong> "Update KYC or account blocked"</li>
+                        <li><strong>Forward message:</strong> "Forward to 10 people"</li>
+                        <li><strong>Unknown numbers:</strong> +91 98XXX from bank</li>
+                        <li><strong>Short links:</strong> bit.ly, tinyurl to hide real URL</li>
+                    </ul>
+                </div>
+
+                <div class="awareness-section">
+                    <h3>🛡️ 4. How to Protect Yourself</h3>
+                    <ul>
+                        <li>✅ Always check URL before entering password</li>
+                        <li>✅ Enable 2-Factor Authentication (2FA) everywhere</li>
+                        <li>✅ Use a password manager</li>
+                        <li>✅ Never share OTP with anyone</li>
+                        <li>✅ Banks never call/email asking for KYC</li>
+                        <li>✅ Report fraud at cybercrime.gov.in</li>
+                        <li>✅ When in doubt, DON'T click</li>
+                    </ul>
+                </div>
+
+                <div class="awareness-section emergency">
+                    <h3>🚨 5. If You Get Phished</h3>
+                    <ul>
+                        <li>1. Immediately change your password</li>
+                        <li>2. Enable 2FA on all accounts</li>
+                        <li>3. Check bank statements for fraud</li>
+                        <li>4. Report to cybercrime.gov.in</li>
+                        <li>5. Call 1930 (Cyber Helpline India)</li>
+                        <li>6. Inform your bank immediately</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="result-buttons">
+                <a href="{{ url_for('quiz') }}" class="auth-btn">🎯 TAKE THE TEST</a>
+                <a href="{{ url_for('home') }}" class="back-link">← Back to Home</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

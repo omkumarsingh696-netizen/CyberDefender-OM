@@ -35,3 +35,14 @@ class Feedback(db.Model):
     rating = db.Column(db.Integer, nullable=False)
     message = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+
+
+
+
+class QuizResult(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    score = db.Column(db.Integer, nullable=False)
+    total = db.Column(db.Integer, nullable=False)
+    percentage = db.Column(db.Float, nullable=False)
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())

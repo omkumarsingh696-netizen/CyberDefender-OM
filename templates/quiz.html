@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Awareness Test | CyberDefender OM</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card quiz-card">
+            <div class="auth-header">
+                <div class="auth-icon">🎯</div>
+                <h1>PHISHING AWARENESS TEST</h1>
+                <p>Kya aap phishing pehchan sakte ho?</p>
+            </div>
+
+            <form method="POST" class="auth-form">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" name="name" required placeholder="Enter your name">
+                </div>
+
+                <div class="quiz-questions">
+                    {% for q in questions %}
+                    <div class="quiz-question">
+                        <div class="q-header">
+                            <span class="q-number">Q{{ q.id }}</span>
+                            <span class="q-type">{{ q.type|upper }}</span>
+                        </div>
+                        <p class="q-text">{{ q.question }}</p>
+                        <div class="q-display">{{ q.display }}</div>
+                        <div class="q-options">
+                            {% for opt in q.options %}
+                            <label class="q-option">
+                                <input type="radio" name="q{{ q.id }}" value="{{ opt }}" required>
+                                <span>{{ opt }}</span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <button type="submit" class="auth-btn">🎯 SUBMIT TEST</button>
+            </form>
+
+            <a href="{{ url_for('home') }}" class="back-link">← Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Result | CyberDefender OM</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card quiz-result-card">
+            <div class="auth-header">
+                {% if percentage >= 80 %}
+                <div class="auth-icon">🏆</div>
+                <h1 style="color:#00ff88;">EXCELLENT!</h1>
+                <p>Aap phishing expert ho!</p>
+                {% elif percentage >= 50 %}
+                <div class="auth-icon">👍</div>
+                <h1 style="color:#00d4ff;">GOOD JOB!</h1>
+                <p>Thodi aur practice chahiye</p>
+                {% else %}
+                <div class="auth-icon">⚠️</div>
+                <h1 style="color:#ff3366;">NEEDS IMPROVEMENT</h1>
+                <p>Aap phishing ka shikar ho sakte ho!</p>
+                {% endif %}
+            </div>
+
+            <div class="result-summary">
+                <div class="result-circle" data-score="{{ percentage }}">
+                    <div class="result-score">{{ percentage }}%</div>
+                    <div class="result-label">Score</div>
+                </div>
+                <p class="result-name">{{ name }}, aapne <strong>{{ score }}/{{ total }}</strong> sahi kiye</p>
+            </div>
+
+            <div class="answers-review">
+                <h3>📋 Answer Review</h3>
+                {% for a in answers %}
+                <div class="answer-item {% if a.is_correct %}correct{% else %}wrong{% endif %}">
+                    <div class="answer-header">
+                        {% if a.is_correct %}
+                        <span class="icon">✅</span>
+                        {% else %}
+                        <span class="icon">❌</span>
+                        {% endif %}
+                        <span>{{ a.question }}</span>
+                    </div>
+                    <div class="answer-display">{{ a.display }}</div>
+                    <p class="answer-user"><strong>Your answer:</strong> {{ a.user_answer }}</p>
+                    {% if not a.is_correct %}
+                    <p class="answer-correct"><strong>Correct:</strong> {{ a.correct }}</p>
+                    {% endif %}
+                    <p class="answer-explanation">💡 {{ a.explanation }}</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="result-buttons">
+                <a href="{{ url_for('quiz') }}" class="auth-btn">🔄 TRY AGAIN</a>
+                <a href="{{ url_for('leaderboard') }}" class="auth-btn" style="background: linear-gradient(135deg, #ffa657, #f85149);">🏆 LEADERBOARD</a>
+                <a href="{{ url_for('awareness') }}" class="auth-btn" style="background: linear-gradient(135deg, #a371f7, #58a6ff);">📚 LEARN MORE</a>
+                <a href="{{ url_for('home') }}" class="back-link">← Back to Home</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

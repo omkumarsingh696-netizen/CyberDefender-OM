@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard | CyberDefender OM</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card leaderboard-card">
+            <div class="auth-header">
+                <div class="auth-icon">🏆</div>
+                <h1>LEADERBOARD</h1>
+                <p>Top 10 Phishing Detectives</p>
+            </div>
+
+            {% if scores %}
+            <div class="leaderboard-list">
+                {% for s in scores %}
+                <div class="leaderboard-item {% if loop.index == 1 %}gold{% elif loop.index == 2 %}silver{% elif loop.index == 3 %}bronze{% endif %}">
+                    <div class="rank">
+                        {% if loop.index == 1 %}🥇
+                        {% elif loop.index == 2 %}🥈
+                        {% elif loop.index == 3 %}🥉
+                        {% else %}#{{ loop.index }}
+                        {% endif %}
+                    </div>
+                    <div class="player-name">{{ s.name }}</div>
+                    <div class="player-score">{{ s.percentage|round(0) }}%</div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p style="text-align:center; color:#8b949e; padding:30px;">Abhi tak koi test nahi diya. Pehle aap bano!</p>
+            {% endif %}
+
+            <div class="result-buttons">
+                <a href="{{ url_for('quiz') }}" class="auth-btn">🎯 TAKE TEST</a>
+                <a href="{{ url_for('home') }}" class="back-link">← Back to Home</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
