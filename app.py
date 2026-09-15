@@ -1,5 +1,6 @@
 
-from flask import import os Flask, render_template, request, redirect, url_for, session, flash, jsonify
+import os
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 import pickle
 import re
 from database import db, User, Complaint, Feedback, QuizResult
