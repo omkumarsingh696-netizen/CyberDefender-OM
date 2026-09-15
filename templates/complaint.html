@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>File Complaint | CyberDefender OM</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card" style="max-width: 600px;">
+            <div class="auth-header">
+                <div class="auth-icon">🚨</div>
+                <h1>FILE A COMPLAINT</h1>
+                <p>Report online fraud & cybercrime</p>
+            </div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for category, message in messages %}
+                <div class="flash flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endwith %}
+            <form method="POST" class="auth-form">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" name="name" required placeholder="Your full name">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" name="phone" required placeholder="+91 XXXXXXXXXX">
+                </div>
+                <div class="form-group">
+                    <label>Fraud Type</label>
+                    <select name="fraud_type" required>
+                        <option value="">Select type...</option>
+                        <option value="Phishing">Phishing Email/URL</option>
+                        <option value="Fake Message">Fake SMS/WhatsApp</option>
+                        <option value="Bank Fraud">Bank/UPI Fraud</option>
+                        <option value="Job Fraud">Fake Job Offer</option>
+                        <option value="Lottery Fraud">Lottery/Prize Fraud</option>
+                        <option value="Identity Theft">Identity Theft</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="description" rows="5" required placeholder="Describe the fraud in detail..."></textarea>
+                </div>
+                <button type="submit" class="auth-btn" style="background: linear-gradient(135deg, #f85149, #a1121f);">🚨 SUBMIT COMPLAINT</button>
+            </form>
+            <a href="{{ url_for('home') }}" class="back-link">← Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up | CyberDefender OM</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-icon">🛡️</div>
+                <h1>CREATE ACCOUNT</h1>
+                <p>Join the CyberDefender network</p>
+            </div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for category, message in messages %}
+                <div class="flash flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endwith %}
+            <form method="POST" class="auth-form">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="username" required placeholder="Choose username">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" required placeholder="Create password" minlength="6">
+                </div>
+                <button type="submit" class="auth-btn">✅ SIGN UP</button>
+            </form>
+            <p class="auth-footer">Already registered? <a href="{{ url_for('login') }}">Login</a></p>
+            <a href="{{ url_for('home') }}" class="back-link">← Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>

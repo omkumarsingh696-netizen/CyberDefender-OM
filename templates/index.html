@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberDefender OM | AI Cybersecurity Platform</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='logo/cyberdefender_logo.svg') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <div class="bg-layer">
+        <div class="skull-bg">💀</div>
+        <div class="skull-mini skull-1">💀</div>
+        <div class="skull-mini skull-2">☠️</div>
+        <div class="skull-mini skull-3">💀</div>
+        <div class="matrix-rain" id="matrixRain"></div>
+        <div class="gradient-orbs">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+        </div>
+        <div class="grid-3d"></div>
+        <!-- === ORIGINAL CSS 3D SKULL === -->
+        <div class="cyber-skull-wrap" id="cyberSkullWrap">
+            <div class="cyber-skull" id="cyberSkull">
+                <div class="cs-cranium"></div>
+                <div class="cs-forehead-plate">
+                    <div class="cs-circuit-h cs-h1"></div>
+                    <div class="cs-circuit-h cs-h2"></div>
+                    <div class="cs-circuit-h cs-h3"></div>
+                </div>
+                <div class="cs-temple cs-temple-l"></div>
+                <div class="cs-temple cs-temple-r"></div>
+                <div class="cs-eye cs-eye-l">
+                    <div class="cs-eye-socket"></div>
+                    <div class="cs-eye-glow"></div>
+                    <div class="cs-eye-core"></div>
+                </div>
+                <div class="cs-eye cs-eye-r">
+                    <div class="cs-eye-socket"></div>
+                    <div class="cs-eye-glow"></div>
+                    <div class="cs-eye-core"></div>
+                </div>
+                <div class="cs-cheek cs-cheek-l"></div>
+                <div class="cs-cheek cs-cheek-r"></div>
+                <div class="cs-nose">
+                    <div class="cs-nostril cs-nl"></div>
+                    <div class="cs-nostril cs-nr"></div>
+                </div>
+                <div class="cs-upper-jaw">
+                    <div class="cs-teeth cs-teeth-up">
+                        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                </div>
+                <div class="cs-lower-jaw">
+                    <div class="cs-chin"></div>
+                    <div class="cs-teeth cs-teeth-down">
+                        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                </div>
+                <div class="cs-ear cs-ear-l">
+                    <div class="cs-ear-ring"></div>
+                    <div class="cs-ear-ring r2"></div>
+                </div>
+                <div class="cs-ear cs-ear-r">
+                    <div class="cs-ear-ring"></div>
+                    <div class="cs-ear-ring r2"></div>
+                </div>
+                <div class="cs-crown-light"></div>
+                <div class="cs-scan-h"></div>
+            </div>
+        </div>
+
+        
+                </div>
+                <div class="nose-cavity">
+                    <div class="nose-hole nose-left"></div>
+                    <div class="nose-hole nose-right"></div>
+                </div>
+                <div class="jaw">
+                    <div class="teeth-row">
+                        <div class="tooth"></div><div class="tooth"></div><div class="tooth"></div><div class="tooth"></div><div class="tooth"></div><div class="tooth"></div><div class="tooth"></div><div class="tooth"></div>
+                    </div>
+                    <div class="teeth-row bottom">
+                        <div class="tooth"></div><div class="tooth"></div><div class="tooth"></div><div class="tooth"></div><div class="tooth"></div><div class="tooth"></div><div class="tooth"></div><div class="tooth"></div>
+                    </div>
+                </div>
+                <div class="side-panel side-left">
+                    <div class="vent"></div><div class="vent"></div><div class="vent"></div><div class="vent"></div>
+                </div>
+                <div class="side-panel side-right">
+                    <div class="vent"></div><div class="vent"></div><div class="vent"></div><div class="vent"></div>
+                </div>
+                <div class="antenna">
+                    <div class="antenna-rod"></div>
+                    <div class="antenna-tip"></div>
+                </div>
+                <div class="scan-laser"></div>
+            </div>
+            <div class="skull-hud">
+                <div class="hud-item">[ DRAG TO ROTATE ]</div>
+                <div class="hud-item">TARGET LOCKED</div>
+                <div class="hud-item">ID: OM-KUMAR-2026</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="status-bar">
+        <div class="status-left">
+            <span class="status-dot"></span>
+            <span class="status-text">SYSTEM ONLINE</span>
+            <span class="divider">|</span>
+            <span class="status-text">AI ENGINE v2.0</span>
+        </div>
+        <div class="status-right">
+            <span id="liveTime">00:00:00</span>
+            <span class="divider">|</span>
+            <span class="threat-counter">THREATS BLOCKED: <span id="threatCount">0</span></span>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-brand">
+            <img src="{{ url_for('static', filename='logo/cyberdefender_logo.svg') }}" alt="Logo" class="nav-logo">
+            <div class="brand-text">
+                <span class="brand-main">CyberDefender</span>
+                <span class="brand-sub">OM</span>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="#scanner" class="nav-link">Scanner</a>
+            <a href="#complaint" class="nav-link">Complaint</a>
+            <a href="#feedback" class="nav-link">Feedback</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </div>
+        <div class="nav-actions">
+            <div class="nav-contact">📱 +91 63966 48181</div>
+            {% if logged_in %}
+                <span class="user-badge">👤 {{ username }}</span>
+                <button onclick="logout()" class="auth-nav-btn">Logout</button>
+            {% else %}
+                <button onclick="openAuth('login')" class="auth-nav-btn">Login</button>
+                <button onclick="openAuth('signup')" class="auth-nav-btn signup-btn">Sign Up</button>
+            {% endif %}
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge"><span class="badge-dot"></span>AI-POWERED CYBERSECURITY</div>
+            <h1 class="hero-title">
+                <span class="title-line">Defend Your</span>
+                <span class="title-line gradient-text">Digital World</span>
+            </h1>
+            <p class="hero-desc">Advanced AI-driven platform to detect phishing, fraud messages, malicious code, and AI-generated threats in real-time.</p>
+            <div class="hero-stats">
+                <div class="stat-item"><div class="stat-number" data-target="99">0</div><div class="stat-label">% Accuracy</div></div>
+                <div class="stat-item"><div class="stat-number" data-target="5">0</div><div class="stat-label">AI Scanners</div></div>
+                <div class="stat-item"><div class="stat-number" data-target="24">0</div><div class="stat-label">/7 Protection</div></div>
+            </div>
+            <a href="#scanner" class="cta-btn">Start Scanning →</a>
+        </div>
+        <div class="hero-visual">
+            <div class="globe-container">
+                <div class="globe">
+                    <div class="globe-ring ring-1"></div>
+                    <div class="globe-ring ring-2"></div>
+                    <div class="globe-ring ring-3"></div>
+                    <div class="globe-core"></div>
+                    <div class="globe-pulse"></div>
+                </div>
+                <div class="threat-tag tag-1">🔴 SQL Injection</div>
+                <div class="threat-tag tag-2">🟡 Phishing URL</div>
+                <div class="threat-tag tag-3">🟢 XSS Attack</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="threat-feed">
+        <div class="feed-header"><span class="pulse-dot"></span>LIVE THREAT FEED</div>
+        <div class="feed-scroll" id="threatFeed"><span>🛡️ Scanning global networks...</span></div>
+    </div>
+
+    <section class="scanner-section" id="scanner">
+        <div class="section-header">
+            <h2>AI Threat Scanner</h2>
+            <p>Select a scanner type and analyze suspicious content instantly</p>
+        </div>
+        <div class="scanner-tabs">
+            <button class="scan-tab active" onclick="switchTab('url', event)">🔗 URL Scanner</button>
+            <button class="scan-tab" onclick="switchTab('email', event)">📧 Fake Email</button>
+            <button class="scan-tab" onclick="switchTab('message', event)">💬 Fraud Message</button>
+            <button class="scan-tab" onclick="switchTab('code', event)">💻 Code Scanner</button>
+            <button class="scan-tab" onclick="switchTab('image', event)">🖼️ AI Image</button>
+        </div>
+        <div class="scanner-card" id="scannerCard">
+            <div class="card-glow"></div>
+            <form method="POST" id="url-form" class="scan-form {% if active_tab == 'url' or not active_tab %}active{% endif %}">
+                <input type="hidden" name="tab" value="url">
+                <label class="form-label">Enter URL to scan</label>
+                <input type="text" name="url" placeholder="https://example.com" value="{{ result.input if result and result.type == 'URL Scanner' else '' }}">
+                <button type="submit" class="scan-btn">🔍 Analyze URL</button>
+            </form>
+            <form method="POST" id="email-form" class="scan-form {% if active_tab == 'email' %}active{% endif %}">
+                <input type="hidden" name="tab" value="email">
+                <label class="form-label">Paste email content</label>
+                <textarea name="email" rows="6" placeholder="Paste suspicious email text here...">{{ result.input if result and result.type == 'Email Scanner' else '' }}</textarea>
+                <button type="submit" class="scan-btn">📧 Analyze Email</button>
+            </form>
+            <form method="POST" id="message-form" class="scan-form {% if active_tab == 'message' %}active{% endif %}">
+                <input type="hidden" name="tab" value="message">
+                <label class="form-label">Paste suspicious message</label>
+                <textarea name="message" rows="6" placeholder="Paste SMS/WhatsApp message here...">{{ result.input if result and result.type == 'Message Scanner' else '' }}</textarea>
+                <button type="submit" class="scan-btn">💬 Analyze Message</button>
+            </form>
+            <form method="POST" id="code-form" class="scan-form {% if active_tab == 'code' %}active{% endif %}">
+                <input type="hidden" name="tab" value="code">
+                <label class="form-label">Paste code to analyze</label>
+                <textarea name="code" rows="8" placeholder="Paste code snippet here...">{{ result.input if result and result.type == 'Code Scanner' else '' }}</textarea>
+                <button type="submit" class="scan-btn">💻 Scan Code</button>
+            </form>
+            <form method="POST" id="image-form" class="scan-form {% if active_tab == 'image' %}active{% endif %}">
+                <input type="hidden" name="tab" value="image">
+                <label class="form-label">Enter image filename</label>
+                <input type="text" name="image_name" placeholder="e.g. ai_generated_fake.png" value="{{ result.input if result and result.type == 'Image Scanner' else '' }}">
+                <button type="submit" class="scan-btn">🖼️ Analyze Image</button>
+            </form>
+        </div>
+
+        {% if result %}
+        <div class="result-card {{ 'danger' if 'PHISHING' in result.status or 'FAKE' in result.status or 'FRAUD' in result.status or 'MALICIOUS' in result.status or 'SUSPICIOUS' in result.status else 'safe' }}">
+            <div class="result-header">
+                <div class="result-icon">{% if 'SAFE' in result.status or 'GENUINE' in result.status %}✅{% else %}⚠️{% endif %}</div>
+                <div>
+                    <h3 class="result-status">{{ result.status }}</h3>
+                    <p class="result-scanner">{{ result.type }}</p>
+                </div>
+            </div>
+            <div class="result-body">
+                <div class="confidence-section">
+                    <div class="confidence-label"><span>Confidence Level</span><span class="confidence-value">{{ result.confidence }}%</span></div>
+                    <div class="confidence-bar"><div class="confidence-fill" style="width: {{ result.confidence }}%"></div></div>
+                </div>
+                <div class="input-preview">
+                    <span class="preview-label">Analyzed Input:</span>
+                    <code class="preview-code">{{ result.input }}</code>
+                </div>
+                {% if result.warnings %}
+                <div class="warnings-section">
+                    <h4>🚨 Detected Threats ({{ result.warnings|length }})</h4>
+                    <ul class="warnings-list">{% for w in result.warnings %}<li>{{ w }}</li>{% endfor %}</ul>
+                </div>
+                {% else %}
+                <div class="no-warnings"><span>✅</span><p>No suspicious activity detected.</p></div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </section>
+
+    <!-- COMPLAINT SECTION -->
+    <section class="complaint-section" id="complaint">
+        <div class="section-header">
+            <h2>🚨 File a Cybercrime Complaint</h2>
+            <p>Report online fraud, phishing, or cybercrime to our team</p>
+        </div>
+        <div class="form-card">
+            <form id="complaintForm" class="inline-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="c_name" required placeholder="Your full name">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="c_email" required placeholder="your@email.com">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" id="c_phone" required placeholder="+91 XXXXXXXXXX">
+                    </div>
+                    <div class="form-group">
+                        <label>Fraud Type</label>
+                        <select id="c_type" required>
+                            <option value="">Select type...</option>
+                            <option>Phishing Email/URL</option>
+                            <option>Fake SMS/WhatsApp</option>
+                            <option>Bank/UPI Fraud</option>
+                            <option>Fake Job Offer</option>
+                            <option>Lottery/Prize Fraud</option>
+                            <option>Identity Theft</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="c_desc" rows="5" required placeholder="Describe the fraud in detail..."></textarea>
+                </div>
+                <button type="submit" class="scan-btn danger-btn">🚨 Submit Complaint</button>
+            </form>
+            <div id="complaintMsg" class="form-msg"></div>
+        </div>
+    </section>
+
+    <!-- FEEDBACK SECTION -->
+    <section class="feedback-section" id="feedback">
+        <div class="section-header">
+            <h2>⭐ Share Your Feedback</h2>
+            <p>Help us improve CyberDefender OM</p>
+        </div>
+        <div class="form-card">
+            <form id="feedbackForm" class="inline-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="f_name" required placeholder="Your name">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="f_email" required placeholder="your@email.com">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Rating</label>
+                    <select id="f_rating" required>
+                        <option value="">Rate us...</option>
+                        <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                        <option value="4">⭐⭐⭐⭐ Very Good</option>
+                        <option value="3">⭐⭐⭐ Good</option>
+                        <option value="2">⭐⭐ Fair</option>
+                        <option value="1">⭐ Poor</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Your Feedback</label>
+                    <textarea id="f_msg" rows="4" required placeholder="Share your experience..."></textarea>
+                </div>
+                <button type="submit" class="scan-btn">⭐ Submit Feedback</button>
+            </form>
+            <div id="feedbackMsg" class="form-msg"></div>
+        </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+        <div class="contact-card">
+            <h2>Get In Touch</h2>
+            <p>For queries, collaborations, or security consultations</p>
+            <div class="developer-profile">
+                <div class="profile-photo-wrapper">
+                    <img src="{{ url_for('static', filename='profile/om.jpeg') }}" alt="Om Kumar" class="profile-photo">
+                    <div class="photo-ring"></div>
+                    <div class="online-dot"></div>
+                </div>
+                <h3 class="profile-name">Om Kumar</h3>
+                <p class="profile-role">Developer & Cybersecurity Researcher</p>
+                <div class="profile-tags">
+                    <span>AI/ML</span><span>Cybersecurity</span><span>Ethical Hacking</span>
+                </div>
+            </div>
+            <div class="contact-info">
+                <div class="contact-item"><span class="contact-icon">📱</span><div><div class="contact-label">Mobile</div><div class="contact-value"><a href="tel:+916396648181">+91 63966 48181</a></div></div></div>
+                <div class="contact-item"><span class="contact-icon">🎓</span><div><div class="contact-label">Institution</div><div class="contact-value">I.P. (P.G.) College, Bulandshahr</div></div></div>
+                <div class="contact-item"><span class="contact-icon">🆔</span><div><div class="contact-label">Roll No.</div><div class="contact-value">1240955106279</div></div></div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <img src="{{ url_for('static', filename='logo/cyberdefender_logo.svg') }}" alt="Logo" class="footer-logo">
+                <span>CyberDefender OM</span>
+            </div>
+            <p class="footer-text">© 2026 CyberDefender OM | Minor Project | Dept. of Computer Science</p>
+            <p class="footer-text">Designed & Developed by <strong>Om Kumar</strong></p>
+        </div>
+    </footer>
+
+    <!-- AUTH MODAL -->
+    <div id="authModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeAuth()">✕</button>
+            <div id="authBody"></div>
+        </div>
+    </div>
+
+    <script>
+        // Cursor
+        const cd = document.querySelector('.cursor-dot');
+        const cr = document.querySelector('.cursor-ring');
+        document.addEventListener('mousemove', e => {
+            cd.style.left = e.clientX + 'px'; cd.style.top = e.clientY + 'px';
+            setTimeout(() => { cr.style.left = e.clientX + 'px'; cr.style.top = e.clientY + 'px'; }, 50);
+        });
+        document.querySelectorAll('a, button, input, textarea, select').forEach(el => {
+            el.addEventListener('mouseenter', () => cr.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cr.classList.remove('hover'));
+        });
+
+        // Tabs
+        function switchTab(tab, event) {
+            document.querySelectorAll('.scan-form').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.scan-tab').forEach(el => el.classList.remove('active'));
+            document.getElementById(tab + '-form').classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        // Loading
+        document.querySelectorAll('.scan-form').forEach(form => {
+            form.addEventListener('submit', () => {
+                document.getElementById('loading').style.display = 'flex';
+            });
+        });
+
+        // Counters
+        const counters = document.querySelectorAll('.stat-number');
+        const animC = (c) => {
+            const t = +c.getAttribute('data-target'); let n = 0;
+            const inc = t / 60;
+            const u = () => { if (n < t) { n += inc; c.innerText = Math.ceil(n); setTimeout(u, 20); } else c.innerText = t; };
+            u();
+        };
+        const obs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) { animC(x.target); obs.unobserve(x.target); } }), { threshold: 0.5 });
+        counters.forEach(c => obs.observe(c));
+
+        // Clock
+        setInterval(() => { document.getElementById('liveTime').textContent = new Date().toLocaleTimeString(); }, 1000);
+
+        // Threat counter
+        let tc = 1247893;
+        setInterval(() => { tc += Math.floor(Math.random() * 5); document.getElementById('threatCount').textContent = tc.toLocaleString(); }, 2000);
+
+        // Threat feed
+        const threats = ['🛡️ Blocked phishing attempt', '🔴 SQL injection detected', '🟡 Suspicious email flagged', '🟢 XSS blocked', '🔴 Malicious URL detected', '🛡️ Fraud SMS detected', '⚠️ AI-generated image flagged'];
+        const feed = document.getElementById('threatFeed'); let fi = 0;
+        setInterval(() => {
+            feed.style.opacity = '0';
+            setTimeout(() => { feed.innerHTML = `<span>${threats[fi]}</span>`; feed.style.opacity = '1'; fi = (fi + 1) % threats.length; }, 300);
+        }, 3000);
+
+        // Matrix rain
+        const canvas = document.createElement('canvas');
+        document.getElementById('matrixRain').appendChild(canvas);
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        const chars = '01アイウエオカキクケコ';
+        const fs = 14; const cols = canvas.width / fs;
+        const drops = Array(Math.floor(cols)).fill(1);
+        setInterval(() => {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.08)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'rgba(0, 255, 136, 0.25)'; ctx.font = fs + 'px monospace';
+            drops.forEach((y, i) => {
+                ctx.fillText(chars[Math.floor(Math.random() * chars.length)], i * fs, y * fs);
+                if (y * fs > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            });
+        }, 60);
+
+        // 3D tilt
+        const card = document.getElementById('scannerCard');
+        card.addEventListener('mousemove', e => {
+            const r = card.getBoundingClientRect();
+            const rx = (e.clientY - r.top - r.height/2) / 20;
+            const ry = (r.width/2 - (e.clientX - r.left)) / 20;
+            card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+        });
+        card.addEventListener('mouseleave', () => card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)');
+
+        // === AUTH MODAL ===
+        function openAuth(type) {
+            const modal = document.getElementById('authModal');
+            const body = document.getElementById('authBody');
+            if (type === 'login') {
+                body.innerHTML = `
+                    <div class="auth-header"><div class="auth-icon">🔐</div><h1>SECURE LOGIN</h1><p>Access your CyberDefender account</p></div>
+                    <div id="authAlert"></div>
+                    <form onsubmit="doLogin(event)" class="auth-form">
+                        <div class="form-group"><label>Username</label><input type="text" id="l_user" required placeholder="Username"></div>
+                        <div class="form-group"><label>Password</label><input type="password" id="l_pass" required placeholder="Password"></div>
+                        <button type="submit" class="auth-btn">🔓 LOGIN</button>
+                    </form>
+                    <p class="auth-footer">No account? <a href="#" onclick="openAuth('signup');return false;">Create one</a></p>`;
+            } else {
+                body.innerHTML = `
+                    <div class="auth-header"><div class="auth-icon">🛡️</div><h1>CREATE ACCOUNT</h1><p>Join the CyberDefender network</p></div>
+                    <div id="authAlert"></div>
+                    <form onsubmit="doSignup(event)" class="auth-form">
+                        <div class="form-group"><label>Username</label><input type="text" id="s_user" required placeholder="Choose username"></div>
+                        <div class="form-group"><label>Email</label><input type="email" id="s_email" required placeholder="your@email.com"></div>
+                        <div class="form-group"><label>Password</label><input type="password" id="s_pass" required placeholder="Min 6 chars" minlength="6"></div>
+                        <button type="submit" class="auth-btn">✅ SIGN UP</button>
+                    </form>
+                    <p class="auth-footer">Already registered? <a href="#" onclick="openAuth('login');return false;">Login</a></p>`;
+            }
+            modal.classList.add('active');
+        }
+
+        function closeAuth() { document.getElementById('authModal').classList.remove('active'); }
+
+        async function doLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('l_user').value;
+            const p = document.getElementById('l_pass').value;
+            const res = await fetch('/api/login', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({username: u, password: p}) });
+            const data = await res.json();
+            if (data.success) { location.reload(); } else {
+                document.getElementById('authAlert').innerHTML = `<div class="flash flash-error">${data.message}</div>`;
+            }
+        }
+
+        async function doSignup(e) {
+            e.preventDefault();
+            const u = document.getElementById('s_user').value;
+            const em = document.getElementById('s_email').value;
+            const p = document.getElementById('s_pass').value;
+            const res = await fetch('/api/signup', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({username: u, email: em, password: p}) });
+            const data = await res.json();
+            if (data.success) { openAuth('login'); } else {
+                document.getElementById('authAlert').innerHTML = `<div class="flash flash-error">${data.message}</div>`;
+            }
+        }
+
+        async function logout() {
+            await fetch('/api/logout', { method: 'POST' });
+            location.reload();
+        }
+
+        // === COMPLAINT ===
+        document.getElementById('complaintForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const res = await fetch('/api/complaint', { method: 'POST', headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    name: document.getElementById('c_name').value,
+                    email: document.getElementById('c_email').value,
+                    phone: document.getElementById('c_phone').value,
+                    fraud_type: document.getElementById('c_type').value,
+                    description: document.getElementById('c_desc').value
+                })});
+            const data = await res.json();
+            const msg = document.getElementById('complaintMsg');
+            msg.className = 'form-msg ' + (data.success ? 'success' : 'error');
+            msg.textContent = data.message;
+            if (data.success) document.getElementById('complaintForm').reset();
+        });
+
+        // === FEEDBACK ===
+        document.getElementById('feedbackForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const res = await fetch('/api/feedback', { method: 'POST', headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    name: document.getElementById('f_name').value,
+                    email: document.getElementById('f_email').value,
+                    rating: document.getElementById('f_rating').value,
+                    message: document.getElementById('f_msg').value
+                })});
+            const data = await res.json();
+            const msg = document.getElementById('feedbackMsg');
+            msg.className = 'form-msg ' + (data.success ? 'success' : 'error');
+            msg.textContent = data.message;
+            if (data.success) document.getElementById('feedbackForm').reset();
+        });
+
+        // Modal close on outside click
+        document.getElementById('authModal').addEventListener('click', e => {
+            if (e.target.id === 'authModal') closeAuth();
+        });
+    </script>
+<script>
+(function(){
+    const wrap = document.getElementById('cyberSkullWrap');
+    const skull = document.getElementById('cyberSkull');
+    if(!wrap || !skull) return;
+    let d=false, sx=0, sy=0, ry=0, rx=0, ar=true, sp=0.4, t;
+    wrap.addEventListener('mousedown',(e)=>{d=true;ar=false;sx=e.clientX;sy=e.clientY;wrap.style.cursor='grabbing';});
+    document.addEventListener('mousemove',(e)=>{
+        if(!d)return;
+        const dx=e.clientX-sx, dy=e.clientY-sy;
+        ry+=dx*0.6; rx-=dy*0.4;
+        rx=Math.max(-45,Math.min(45,rx));
+        skull.style.transform=`rotateY(${ry}deg) rotateX(${rx}deg)`;
+        sx=e.clientX; sy=e.clientY;
+    });
+    document.addEventListener('mouseup',()=>{if(d){d=false;wrap.style.cursor='grab';clearTimeout(t);t=setTimeout(()=>{ar=true;},2000);}});
+    wrap.addEventListener('touchstart',(e)=>{d=true;ar=false;sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+    document.addEventListener('touchmove',(e)=>{
+        if(!d)return;
+        const dx=e.touches[0].clientX-sx, dy=e.touches[0].clientY-sy;
+        ry+=dx*0.6; rx-=dy*0.4;
+        rx=Math.max(-45,Math.min(45,rx));
+        skull.style.transform=`rotateY(${ry}deg) rotateX(${rx}deg)`;
+        sx=e.touches[0].clientX; sy=e.touches[0].clientY;
+    },{passive:true});
+    document.addEventListener('touchend',()=>{d=false;clearTimeout(t);t=setTimeout(()=>{ar=true;},2000);});
+    function a(){
+        if(ar && !d){
+            ry += sp;
+            skull.style.transform=`rotateY(${ry}deg) rotateX(${rx}deg)`;
+        }
+        requestAnimationFrame(a);
+    }
+    a();
+})();
+</script></body>
+</html>

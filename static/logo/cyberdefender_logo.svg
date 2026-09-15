@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#58a6ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1f6feb;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3fb950;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#238636;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Outer Shield -->
+  <path d="M100 15 L170 45 L170 100 Q170 155 100 185 Q30 155 30 100 L30 45 Z" 
+        fill="none" stroke="url(#grad1)" stroke-width="4" filter="url(#glow)"/>
+  
+  <!-- Inner Shield -->
+  <path d="M100 30 L155 55 L155 100 Q155 145 100 170 Q45 145 45 100 L45 55 Z" 
+        fill="rgba(88,166,255,0.1)" stroke="url(#grad1)" stroke-width="2"/>
+  
+  <!-- Lock Body -->
+  <rect x="75" y="95" width="50" height="40" rx="5" fill="url(#grad2)"/>
+  
+  <!-- Lock Shackle -->
+  <path d="M85 95 L85 80 Q85 65 100 65 Q115 65 115 80 L115 95" 
+        fill="none" stroke="url(#grad2)" stroke-width="6" stroke-linecap="round"/>
+  
+  <!-- Keyhole -->
+  <circle cx="100" cy="110" r="5" fill="#0d1117"/>
+  <rect x="98" y="112" width="4" height="12" fill="#0d1117"/>
+  
+  <!-- Hacker Mask / Eye -->
+  <ellipse cx="75" cy="55" rx="12" ry="8" fill="#58a6ff" opacity="0.8"/>
+  <ellipse cx="125" cy="55" rx="12" ry="8" fill="#58a6ff" opacity="0.8"/>
+  <circle cx="75" cy="55" r="4" fill="#0d1117"/>
+  <circle cx="125" cy="55" r="4" fill="#0d1117"/>
+  
+  <!-- Binary Code Elements -->
+  <text x="50" y="145" font-family="monospace" font-size="10" fill="#3fb950" opacity="0.7">10110</text>
+  <text x="130" y="145" font-family="monospace" font-size="10" fill="#3fb950" opacity="0.7">01001</text>
+  <text x="55" y="160" font-family="monospace" font-size="8" fill="#58a6ff" opacity="0.5">0110</text>
+  <text x="135" y="160" font-family="monospace" font-size="8" fill="#58a6ff" opacity="0.5">1001</text>
+  
+  <!-- Lightning Bolt (Power) -->
+  <path d="M100 75 L95 90 L103 88 L98 105" fill="none" stroke="#f0f6fc" stroke-width="2" opacity="0.9"/>
+</svg>

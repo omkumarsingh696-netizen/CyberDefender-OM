@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback | CyberDefender OM</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card" style="max-width: 600px;">
+            <div class="auth-header">
+                <div class="auth-icon">⭐</div>
+                <h1>SHARE FEEDBACK</h1>
+                <p>Help us improve CyberDefender</p>
+            </div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for category, message in messages %}
+                <div class="flash flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endwith %}
+            <form method="POST" class="auth-form">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="name" required placeholder="Your name">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Rating</label>
+                    <select name="rating" required>
+                        <option value="">Rate our platform...</option>
+                        <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                        <option value="4">⭐⭐⭐⭐ Very Good</option>
+                        <option value="3">⭐⭐⭐ Good</option>
+                        <option value="2">⭐⭐ Fair</option>
+                        <option value="1">⭐ Poor</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Your Feedback</label>
+                    <textarea name="message" rows="5" required placeholder="Share your experience..."></textarea>
+                </div>
+                <button type="submit" class="auth-btn">⭐ SUBMIT FEEDBACK</button>
+            </form>
+            <a href="{{ url_for('home') }}" class="back-link">← Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>
