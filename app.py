@@ -1,11 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
+from flask import import os Flask, render_template, request, redirect, url_for, session, flash, jsonify
 import pickle
 import re
 from database import db, User, Complaint, Feedback, QuizResult
 
 app = Flask(__name__)
 app.secret_key = 'cyberdefender_om_secret_2026'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cyberdefender.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.path.abspath(os.path.dirname(__file__)), 'cyberdefender.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
