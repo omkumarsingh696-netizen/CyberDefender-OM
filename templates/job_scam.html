@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Job Scam Checker | CyberDefender OM</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="auth-container">
+<div class="auth-card" style="max-width:750px;">
+<div class="auth-header">
+<div class="auth-icon">💼</div>
+<h1>JOB SCAM CHECKER</h1>
+<p>Fake job offer pehchano</p>
+</div>
+<form method="POST" class="auth-form">
+<div class="form-group">
+<label>Job Offer Text Paste Karo</label>
+<textarea name="job_text" rows="6" required placeholder="Paste job offer message here...">{{ result.input if result else '' }}</textarea>
+</div>
+<button type="submit" class="auth-btn">💼 CHECK JOB OFFER</button>
+</form>
+{% if result %}
+<div class="result-card {{ 'danger' if 'SCAM' in result.status else 'safe' }}" style="margin-top:25px;">
+<div class="result-header">
+<div class="result-icon">{{ '⚠️' if 'SCAM' in result.status else '✅' }}</div>
+<div>
+<h3 class="result-status">{{ result.status }}</h3>
+<p class="result-scanner">Confidence: {{ result.confidence }}%</p>
+</div>
+</div>
+<div class="result-body">
+{% if result.warnings %}
+<div class="warnings-section">
+<h4>🚨 Red Flags ({{ result.warnings|length }})</h4>
+<ul class="warnings-list">
+{% for w in result.warnings %}<li>{{ w }}</li>{% endfor %}
+</ul>
+</div>
+{% else %}
+<div class="no-warnings"><span>✅</span><p>Koi suspicious pattern nahi mila.</p></div>
+{% endif %}
+</div>
+</div>
+{% endif %}
+<a href="{{ url_for('home') }}" class="back-link">← Back to Home</a>
+</div>
+</div>
+</body>
+</html>

@@ -2924,3 +2924,563 @@ input::placeholder, textarea::placeholder {
         padding: 12px 15px;
     }
 }
+
+
+/* ============================================
+   3D ROBOTIC SKELETON ANIMATION
+   ============================================ */
+.skeleton-3d-wrap {
+    position: fixed;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 450px;
+    height: 550px;
+    perspective: 1600px;
+    z-index: 0;
+    cursor: grab;
+    user-select: none;
+    opacity: 0.35;
+    transition: opacity 0.4s;
+    pointer-events: auto;
+}
+.skeleton-3d-wrap:hover { opacity: 0.7; }
+.skeleton-3d-wrap:active { cursor: grabbing; }
+
+.skeleton-3d {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.05s linear;
+    animation: skFloat 5s ease-in-out infinite;
+}
+@keyframes skFloat {
+    0%,100% { filter: drop-shadow(0 0 30px rgba(0,212,255,0.7)); }
+    50% { filter: drop-shadow(0 0 60px rgba(160,80,255,0.9)); }
+}
+
+/* HEAD / CRANIUM */
+.skull-head {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; height: 100%;
+    transform-style: preserve-3d;
+}
+
+.skull-cranium {
+    position: absolute;
+    top: 5%; left: 8%;
+    width: 84%; height: 55%;
+    background: 
+        radial-gradient(ellipse at 30% 30%, rgba(0,212,255,0.6) 0%, transparent 45%),
+        radial-gradient(ellipse at 70% 40%, rgba(160,80,255,0.6) 0%, transparent 45%),
+        linear-gradient(135deg, #0a1020 0%, #1a2a5a 30%, #2a1050 60%, #050810 100%);
+    border-radius: 50% 50% 35% 35% / 65% 65% 35% 35%;
+    box-shadow: 
+        inset 0 -20px 50px rgba(0, 212, 255, 0.6),
+        inset 0 20px 50px rgba(160, 80, 255, 0.5),
+        inset 25px 0 50px rgba(0, 212, 255, 0.3),
+        inset -25px 0 50px rgba(160, 80, 255, 0.3),
+        0 0 60px rgba(0, 212, 255, 0.7),
+        0 0 120px rgba(160, 80, 255, 0.5);
+    border: 3px solid rgba(0, 212, 255, 0.8);
+}
+
+/* FOREHEAD CIRCUITS */
+.skull-forehead {
+    position: absolute;
+    top: 15%; left: 22%;
+    width: 56%; height: 22%;
+    border-radius: 50% 50% 20% 20%;
+    border-bottom: 2px solid rgba(160, 80, 255, 0.7);
+    box-shadow: inset 0 0 25px rgba(160,80,255,0.5);
+}
+.circuit-line {
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00d4ff, #a050ff, #00d4ff, transparent);
+    border-radius: 2px;
+    box-shadow: 0 0 10px #00d4ff, 0 0 20px #a050ff;
+    animation: circuitFlow 2s linear infinite;
+}
+.cl-1 { top: 25%; left: 10%; width: 80%; animation-delay: 0s; }
+.cl-2 { top: 50%; left: 20%; width: 60%; animation-delay: 0.6s; }
+.cl-3 { top: 75%; left: 15%; width: 70%; animation-delay: 1.2s; }
+@keyframes circuitFlow {
+    0%,100% { opacity: 0.5; }
+    50% { opacity: 1; box-shadow: 0 0 20px #00d4ff, 0 0 40px #a050ff; }
+}
+
+/* EYES */
+.skull-eye {
+    position: absolute;
+    top: 42%;
+    width: 26%; height: 22%;
+    z-index: 5;
+}
+.left-eye { left: 15%; }
+.right-eye { right: 15%; }
+
+.eye-socket {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse, #000 0%, #0a0010 60%, transparent 100%);
+    border-radius: 50% 50% 45% 45%;
+    box-shadow: 
+        inset 0 0 25px #000,
+        inset 0 0 50px rgba(255, 0, 80, 0.4),
+        0 0 25px rgba(0, 212, 255, 0.6);
+    border: 2px solid rgba(0, 212, 255, 0.6);
+}
+.eye-glow {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 95%; height: 95%;
+    background: radial-gradient(circle, #ff0040 0%, #ff0040 30%, rgba(255,0,64,0.5) 60%, transparent 100%);
+    border-radius: 50%;
+    filter: blur(3px);
+    animation: eyeGlow 1.5s ease-in-out infinite alternate;
+}
+@keyframes eyeGlow {
+    from { opacity: 0.7; box-shadow: 0 0 25px #ff0040, inset 0 0 20px #ff0040; }
+    to { opacity: 1; box-shadow: 0 0 50px #ff0040, 0 0 90px #ff0040, inset 0 0 30px #ff0040; }
+}
+.eye-core {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 32%; height: 32%;
+    background: radial-gradient(circle, #fff 0%, #ff0040 40%, #ff0040 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 20px #fff, 0 0 40px #ff0040, 0 0 60px #ff0040;
+    animation: pupilMove 3s ease-in-out infinite;
+}
+@keyframes pupilMove {
+    0%,100% { transform: translate(-50%, -50%); }
+    25% { transform: translate(-30%, -50%); }
+    50% { transform: translate(-70%, -50%); }
+    75% { transform: translate(-50%, -60%); }
+}
+
+/* NOSE */
+.skull-nose {
+    position: absolute;
+    top: 62%; left: 50%;
+    transform: translateX(-50%);
+    width: 12%; height: 14%;
+    background: radial-gradient(ellipse, #000 0%, #0a0010 100%);
+    border-radius: 50% 50% 30% 30%;
+    box-shadow: inset 0 0 20px #000, 0 0 15px rgba(0, 212, 255, 0.5);
+    border: 1px solid rgba(0, 212, 255, 0.4);
+}
+.nostril {
+    position: absolute;
+    top: 35%;
+    width: 30%; height: 45%;
+    background: #000;
+    border-radius: 50%;
+    box-shadow: inset 0 0 6px rgba(0,212,255,0.7);
+}
+.nl { left: 10%; }
+.nr { right: 10%; }
+
+/* JAW + TEETH */
+.skull-jaw {
+    position: absolute;
+    top: 72%; left: 20%;
+    width: 60%; height: 22%;
+    background: linear-gradient(180deg, #1a2a5a, #050810);
+    border: 3px solid rgba(160, 80, 255, 0.7);
+    border-radius: 10% 10% 30% 30%;
+    box-shadow: 
+        0 0 25px rgba(160, 80, 255, 0.6),
+        inset 0 0 20px rgba(160, 80, 255, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 4px 6px;
+    overflow: hidden;
+}
+.teeth {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 35%;
+    gap: 2px;
+}
+.teeth span {
+    flex: 1;
+    height: 100%;
+    background: linear-gradient(180deg, #e8e8e8 0%, #a8a8a8 50%, #606060 100%);
+    border-radius: 2px;
+    box-shadow: 0 0 8px rgba(0, 212, 255, 0.7), inset 0 0 4px rgba(160, 80, 255, 0.6);
+    border: 1px solid rgba(0, 212, 255, 0.5);
+    animation: toothGlow 2s ease-in-out infinite alternate;
+}
+.teeth span:nth-child(odd) { animation-delay: 0.3s; }
+@keyframes toothGlow {
+    from { box-shadow: 0 0 8px rgba(0, 212, 255, 0.7), inset 0 0 4px rgba(160, 80, 255, 0.6); }
+    to { box-shadow: 0 0 18px rgba(160, 80, 255, 1), inset 0 0 8px rgba(0, 212, 255, 0.9); }
+}
+.teeth-down span { border-radius: 2px 2px 4px 4px; }
+
+/* EARS / RINGS */
+.skull-ear {
+    position: absolute;
+    top: 45%;
+    width: 10%; height: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+.left-ear { left: -3%; }
+.right-ear { right: -3%; }
+.ear-ring {
+    width: 100%;
+    aspect-ratio: 1;
+    border: 2px solid rgba(0, 212, 255, 0.7);
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.7), inset 0 0 10px rgba(0, 212, 255, 0.5);
+    animation: earSpin 3s linear infinite;
+}
+.ear-ring.r2 {
+    border-color: rgba(160, 80, 255, 0.7);
+    box-shadow: 0 0 15px rgba(160, 80, 255, 0.7);
+    animation-direction: reverse;
+}
+@keyframes earSpin {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.1); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+/* CROWN GLOW */
+.crown-glow {
+    position: absolute;
+    top: 2%; left: 50%;
+    transform: translateX(-50%);
+    width: 45%; height: 5px;
+    background: linear-gradient(90deg, transparent, #00d4ff, #a050ff, #00d4ff, transparent);
+    border-radius: 3px;
+    box-shadow: 0 0 20px #00d4ff, 0 0 40px #a050ff, 0 0 60px rgba(0, 212, 255, 0.6);
+    animation: crownPulse 2s ease-in-out infinite;
+}
+@keyframes crownPulse {
+    0%,100% { opacity: 0.6; }
+    50% { opacity: 1; box-shadow: 0 0 30px #00d4ff, 0 0 60px #a050ff, 0 0 100px rgba(0, 212, 255, 0.8); }
+}
+
+/* SCAN BEAM */
+.scan-beam {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, transparent, #00d4ff, #a050ff, #00d4ff, transparent);
+    box-shadow: 0 0 20px #00d4ff, 0 0 40px #a050ff;
+    animation: scanMove 3s linear infinite;
+    z-index: 10;
+}
+@keyframes scanMove {
+    0% { top: 0; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+}
+
+/* Hide old skulls */
+.robot-skull-container, .skull-360-container, .cyber-skull-wrap { display: none !important; }
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .skeleton-3d-wrap { width: 300px; height: 370px; opacity: 0.25; }
+    .skeleton-3d-wrap:hover { opacity: 0.45; }
+}
+@media (max-width: 480px) {
+    .skeleton-3d-wrap { width: 230px; height: 290px; opacity: 0.2; }
+}
+
+
+/* ============================================
+   3D ROBOTIC SKELETON ANIMATION
+   ============================================ */
+.skeleton-3d-wrap {
+    position: fixed;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 450px;
+    height: 550px;
+    perspective: 1600px;
+    z-index: 0;
+    cursor: grab;
+    user-select: none;
+    opacity: 0.35;
+    transition: opacity 0.4s;
+    pointer-events: auto;
+}
+.skeleton-3d-wrap:hover { opacity: 0.7; }
+.skeleton-3d-wrap:active { cursor: grabbing; }
+
+.skeleton-3d {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.05s linear;
+    animation: skFloat 5s ease-in-out infinite;
+}
+@keyframes skFloat {
+    0%,100% { filter: drop-shadow(0 0 30px rgba(0,212,255,0.7)); }
+    50% { filter: drop-shadow(0 0 60px rgba(160,80,255,0.9)); }
+}
+
+/* HEAD / CRANIUM */
+.skull-head {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; height: 100%;
+    transform-style: preserve-3d;
+}
+
+.skull-cranium {
+    position: absolute;
+    top: 5%; left: 8%;
+    width: 84%; height: 55%;
+    background: 
+        radial-gradient(ellipse at 30% 30%, rgba(0,212,255,0.6) 0%, transparent 45%),
+        radial-gradient(ellipse at 70% 40%, rgba(160,80,255,0.6) 0%, transparent 45%),
+        linear-gradient(135deg, #0a1020 0%, #1a2a5a 30%, #2a1050 60%, #050810 100%);
+    border-radius: 50% 50% 35% 35% / 65% 65% 35% 35%;
+    box-shadow: 
+        inset 0 -20px 50px rgba(0, 212, 255, 0.6),
+        inset 0 20px 50px rgba(160, 80, 255, 0.5),
+        inset 25px 0 50px rgba(0, 212, 255, 0.3),
+        inset -25px 0 50px rgba(160, 80, 255, 0.3),
+        0 0 60px rgba(0, 212, 255, 0.7),
+        0 0 120px rgba(160, 80, 255, 0.5);
+    border: 3px solid rgba(0, 212, 255, 0.8);
+}
+
+/* FOREHEAD CIRCUITS */
+.skull-forehead {
+    position: absolute;
+    top: 15%; left: 22%;
+    width: 56%; height: 22%;
+    border-radius: 50% 50% 20% 20%;
+    border-bottom: 2px solid rgba(160, 80, 255, 0.7);
+    box-shadow: inset 0 0 25px rgba(160,80,255,0.5);
+}
+.circuit-line {
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00d4ff, #a050ff, #00d4ff, transparent);
+    border-radius: 2px;
+    box-shadow: 0 0 10px #00d4ff, 0 0 20px #a050ff;
+    animation: circuitFlow 2s linear infinite;
+}
+.cl-1 { top: 25%; left: 10%; width: 80%; animation-delay: 0s; }
+.cl-2 { top: 50%; left: 20%; width: 60%; animation-delay: 0.6s; }
+.cl-3 { top: 75%; left: 15%; width: 70%; animation-delay: 1.2s; }
+@keyframes circuitFlow {
+    0%,100% { opacity: 0.5; }
+    50% { opacity: 1; box-shadow: 0 0 20px #00d4ff, 0 0 40px #a050ff; }
+}
+
+/* EYES */
+.skull-eye {
+    position: absolute;
+    top: 42%;
+    width: 26%; height: 22%;
+    z-index: 5;
+}
+.left-eye { left: 15%; }
+.right-eye { right: 15%; }
+
+.eye-socket {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse, #000 0%, #0a0010 60%, transparent 100%);
+    border-radius: 50% 50% 45% 45%;
+    box-shadow: 
+        inset 0 0 25px #000,
+        inset 0 0 50px rgba(255, 0, 80, 0.4),
+        0 0 25px rgba(0, 212, 255, 0.6);
+    border: 2px solid rgba(0, 212, 255, 0.6);
+}
+.eye-glow {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 95%; height: 95%;
+    background: radial-gradient(circle, #ff0040 0%, #ff0040 30%, rgba(255,0,64,0.5) 60%, transparent 100%);
+    border-radius: 50%;
+    filter: blur(3px);
+    animation: eyeGlow 1.5s ease-in-out infinite alternate;
+}
+@keyframes eyeGlow {
+    from { opacity: 0.7; box-shadow: 0 0 25px #ff0040, inset 0 0 20px #ff0040; }
+    to { opacity: 1; box-shadow: 0 0 50px #ff0040, 0 0 90px #ff0040, inset 0 0 30px #ff0040; }
+}
+.eye-core {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 32%; height: 32%;
+    background: radial-gradient(circle, #fff 0%, #ff0040 40%, #ff0040 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 20px #fff, 0 0 40px #ff0040, 0 0 60px #ff0040;
+    animation: pupilMove 3s ease-in-out infinite;
+}
+@keyframes pupilMove {
+    0%,100% { transform: translate(-50%, -50%); }
+    25% { transform: translate(-30%, -50%); }
+    50% { transform: translate(-70%, -50%); }
+    75% { transform: translate(-50%, -60%); }
+}
+
+/* NOSE */
+.skull-nose {
+    position: absolute;
+    top: 62%; left: 50%;
+    transform: translateX(-50%);
+    width: 12%; height: 14%;
+    background: radial-gradient(ellipse, #000 0%, #0a0010 100%);
+    border-radius: 50% 50% 30% 30%;
+    box-shadow: inset 0 0 20px #000, 0 0 15px rgba(0, 212, 255, 0.5);
+    border: 1px solid rgba(0, 212, 255, 0.4);
+}
+.nostril {
+    position: absolute;
+    top: 35%;
+    width: 30%; height: 45%;
+    background: #000;
+    border-radius: 50%;
+    box-shadow: inset 0 0 6px rgba(0,212,255,0.7);
+}
+.nl { left: 10%; }
+.nr { right: 10%; }
+
+/* JAW + TEETH */
+.skull-jaw {
+    position: absolute;
+    top: 72%; left: 20%;
+    width: 60%; height: 22%;
+    background: linear-gradient(180deg, #1a2a5a, #050810);
+    border: 3px solid rgba(160, 80, 255, 0.7);
+    border-radius: 10% 10% 30% 30%;
+    box-shadow: 
+        0 0 25px rgba(160, 80, 255, 0.6),
+        inset 0 0 20px rgba(160, 80, 255, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 4px 6px;
+    overflow: hidden;
+}
+.teeth {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 35%;
+    gap: 2px;
+}
+.teeth span {
+    flex: 1;
+    height: 100%;
+    background: linear-gradient(180deg, #e8e8e8 0%, #a8a8a8 50%, #606060 100%);
+    border-radius: 2px;
+    box-shadow: 0 0 8px rgba(0, 212, 255, 0.7), inset 0 0 4px rgba(160, 80, 255, 0.6);
+    border: 1px solid rgba(0, 212, 255, 0.5);
+    animation: toothGlow 2s ease-in-out infinite alternate;
+}
+.teeth span:nth-child(odd) { animation-delay: 0.3s; }
+@keyframes toothGlow {
+    from { box-shadow: 0 0 8px rgba(0, 212, 255, 0.7), inset 0 0 4px rgba(160, 80, 255, 0.6); }
+    to { box-shadow: 0 0 18px rgba(160, 80, 255, 1), inset 0 0 8px rgba(0, 212, 255, 0.9); }
+}
+.teeth-down span { border-radius: 2px 2px 4px 4px; }
+
+/* EARS / RINGS */
+.skull-ear {
+    position: absolute;
+    top: 45%;
+    width: 10%; height: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+.left-ear { left: -3%; }
+.right-ear { right: -3%; }
+.ear-ring {
+    width: 100%;
+    aspect-ratio: 1;
+    border: 2px solid rgba(0, 212, 255, 0.7);
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.7), inset 0 0 10px rgba(0, 212, 255, 0.5);
+    animation: earSpin 3s linear infinite;
+}
+.ear-ring.r2 {
+    border-color: rgba(160, 80, 255, 0.7);
+    box-shadow: 0 0 15px rgba(160, 80, 255, 0.7);
+    animation-direction: reverse;
+}
+@keyframes earSpin {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.1); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+/* CROWN GLOW */
+.crown-glow {
+    position: absolute;
+    top: 2%; left: 50%;
+    transform: translateX(-50%);
+    width: 45%; height: 5px;
+    background: linear-gradient(90deg, transparent, #00d4ff, #a050ff, #00d4ff, transparent);
+    border-radius: 3px;
+    box-shadow: 0 0 20px #00d4ff, 0 0 40px #a050ff, 0 0 60px rgba(0, 212, 255, 0.6);
+    animation: crownPulse 2s ease-in-out infinite;
+}
+@keyframes crownPulse {
+    0%,100% { opacity: 0.6; }
+    50% { opacity: 1; box-shadow: 0 0 30px #00d4ff, 0 0 60px #a050ff, 0 0 100px rgba(0, 212, 255, 0.8); }
+}
+
+/* SCAN BEAM */
+.scan-beam {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, transparent, #00d4ff, #a050ff, #00d4ff, transparent);
+    box-shadow: 0 0 20px #00d4ff, 0 0 40px #a050ff;
+    animation: scanMove 3s linear infinite;
+    z-index: 10;
+}
+@keyframes scanMove {
+    0% { top: 0; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+}
+
+/* Hide old skulls */
+.robot-skull-container, .skull-360-container, .cyber-skull-wrap { display: none !important; }
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .skeleton-3d-wrap { width: 300px; height: 370px; opacity: 0.25; }
+    .skeleton-3d-wrap:hover { opacity: 0.45; }
+}
+@media (max-width: 480px) {
+    .skeleton-3d-wrap { width: 230px; height: 290px; opacity: 0.2; }
+}

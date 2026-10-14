@@ -1,0 +1,87 @@
+/* ============================================
+   3D INTERACTIVE CYBER BACKGROUND
+   ============================================ */
+#cyberBg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+    background: radial-gradient(ellipse at center, #041428 0%, #020d18 70%, #000408 100%);
+    pointer-events: none;
+}
+
+#globeCanvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 700px;
+    pointer-events: auto;
+    cursor: grab;
+}
+#globeCanvas:active { cursor: grabbing; }
+
+#particleCanvas,
+#matrixCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#matrixCanvas { opacity: 0.12; }
+
+.radar-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00ff9d, #00f0ff, #00ff9d, transparent);
+    box-shadow: 0 0 20px #00ff9d, 0 0 40px #00f0ff;
+    animation: radarScan 5s linear infinite;
+    z-index: 5;
+    pointer-events: none;
+}
+.radar-line.r2 {
+    animation-delay: 2.5s;
+    background: linear-gradient(90deg, transparent, #00f0ff, #a050ff, #00f0ff, transparent);
+    box-shadow: 0 0 20px #00f0ff, 0 0 40px #a050ff;
+}
+
+@keyframes radarScan {
+    0% { top: 0; opacity: 0; }
+    5% { opacity: 1; }
+    95% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+}
+
+/* === PURANE SKULLS KO HIDE KARO === */
+.robot-skull-container,
+.skull-360-container,
+.cyber-skull-wrap,
+.skeleton-3d-wrap {
+    display: none !important;
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 768px) {
+    #globeCanvas {
+        width: 400px;
+        height: 400px;
+    }
+    #matrixCanvas { opacity: 0.06; }
+}
+
+@media (max-width: 480px) {
+    #globeCanvas {
+        width: 300px;
+        height: 300px;
+    }
+    #particleCanvas { opacity: 0.6; }
+}

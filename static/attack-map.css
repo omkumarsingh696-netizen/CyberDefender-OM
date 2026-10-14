@@ -1,0 +1,199 @@
+/* === LIVE CYBER ATTACK WORLD MAP === */
+#attackMapBg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+    background: radial-gradient(ellipse at center, #041a2e 0%, #020d18 60%, #000408 100%);
+    pointer-events: none;
+}
+
+#worldMapCanvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+}
+
+/* === LEFT PANEL - ATTACK COUNTER === */
+.attack-panel-left {
+    position: absolute;
+    top: 100px;
+    left: 20px;
+    width: 180px;
+    padding: 15px;
+    background: rgba(2, 13, 24, 0.75);
+    border: 1px solid rgba(0, 255, 157, 0.4);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 25px rgba(0, 255, 157, 0.2);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.panel-title {
+    font-size: 0.65em;
+    color: #00ff9d;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(0, 255, 157, 0.3);
+    animation: pulseTitle 2s ease-in-out infinite;
+}
+@keyframes pulseTitle {
+    0%,100% { opacity: 0.8; }
+    50% { opacity: 1; text-shadow: 0 0 10px #00ff9d; }
+}
+
+.panel-stat {
+    margin-bottom: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0, 255, 157, 0.1);
+}
+.panel-stat:last-child { border-bottom: none; }
+
+.stat-big {
+    font-size: 1.5em;
+    font-weight: 900;
+    color: #00f0ff;
+    text-shadow: 0 0 15px #00f0ff;
+    font-family: 'Orbitron', sans-serif;
+    line-height: 1;
+}
+.stat-big.red { color: #ff0040; text-shadow: 0 0 15px #ff0040; }
+.stat-big.green { color: #00ff9d; text-shadow: 0 0 15px #00ff9d; }
+
+.stat-sub {
+    font-size: 0.55em;
+    color: #6e8fa8;
+    letter-spacing: 1px;
+    margin-top: 4px;
+}
+
+/* === RIGHT PANEL - LIVE FEED === */
+.attack-feed-right {
+    position: absolute;
+    top: 100px;
+    right: 20px;
+    width: 280px;
+    max-height: 70vh;
+    padding: 15px;
+    background: rgba(2, 13, 24, 0.75);
+    border: 1px solid rgba(255, 0, 64, 0.4);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 25px rgba(255, 0, 64, 0.2);
+    font-family: 'JetBrains Mono', monospace;
+    overflow: hidden;
+}
+
+.feed-title {
+    font-size: 0.7em;
+    color: #ff0040;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 0, 64, 0.3);
+    animation: feedPulse 1.2s ease-in-out infinite;
+}
+@keyframes feedPulse {
+    0%,100% { opacity: 0.8; }
+    50% { opacity: 1; text-shadow: 0 0 15px #ff0040; }
+}
+
+.feed-list {
+    max-height: calc(70vh - 60px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #ff0040 transparent;
+}
+.feed-list::-webkit-scrollbar { width: 4px; }
+.feed-list::-webkit-scrollbar-thumb { background: #ff0040; border-radius: 2px; }
+
+.feed-item {
+    font-size: 0.62em;
+    padding: 6px 8px;
+    margin-bottom: 4px;
+    border-left: 2px solid #00ff9d;
+    background: rgba(0, 255, 157, 0.05);
+    color: #c9d1d9;
+    animation: feedSlide 0.4s ease-out;
+    line-height: 1.3;
+}
+.feed-item.critical {
+    border-left-color: #ff0040;
+    background: rgba(255, 0, 64, 0.08);
+    color: #ffb3c0;
+}
+.feed-item.warning {
+    border-left-color: #ffa657;
+    background: rgba(255, 166, 87, 0.08);
+    color: #ffd4a8;
+}
+.feed-item .time {
+    color: #00f0ff;
+    font-weight: 700;
+    margin-right: 5px;
+}
+.feed-item .type {
+    color: #00ff9d;
+    font-weight: 700;
+}
+
+@keyframes feedSlide {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* === SCANLINES OVERLAY === */
+.scanlines {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent 0px,
+        transparent 3px,
+        rgba(0, 255, 157, 0.025) 3px,
+        rgba(0, 255, 157, 0.025) 4px
+    );
+    pointer-events: none;
+    animation: scanlineShift 8s linear infinite;
+}
+@keyframes scanlineShift {
+    from { background-position: 0 0; }
+    to { background-position: 0 100px; }
+}
+
+/* Purane elements hide */
+.robot-skull-container,
+.skull-360-container,
+.cyber-skull-wrap,
+.skeleton-3d-wrap,
+#cyberBg { display: none !important; }
+
+/* Mobile */
+@media (max-width: 900px) {
+    .attack-panel-left {
+        top: auto;
+        bottom: 20px;
+        left: 10px;
+        width: 140px;
+        padding: 10px;
+    }
+    .stat-big { font-size: 1.1em; }
+    .panel-title { font-size: 0.55em; }
+    .attack-feed-right { display: none; }
+}
+
+@media (max-width: 480px) {
+    .attack-panel-left {
+        width: 120px;
+        padding: 8px;
+    }
+    .stat-big { font-size: 0.95em; }
+    .stat-sub { font-size: 0.5em; }
+}
+
+.bg-layer{display:none!important}
+#attackMapBg{z-index:0!important;display:block!important}
+body{background:transparent!important}

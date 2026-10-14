@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Score | CyberDefender OM</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="auth-container">
+<div class="auth-card" style="max-width:750px;">
+<div class="auth-header">
+<div class="auth-icon">📊</div>
+<h1>PRIVACY SCORE</h1>
+<p>Apni online privacy check karo</p>
+</div>
+<div id="privacyQuiz" class="awareness-content" style="margin:20px 0;">
+<div class="awareness-section">
+<h3>Apne aap ko score do (1-10)</h3>
+<div class="form-group"><label>1. Strong unique passwords use karte ho?</label>
+<input type="range" id="q1" min="0" max="10" value="5" oninput="calc()"></div>
+<div class="form-group"><label>2. 2FA enable hai har account par?</label>
+<input type="range" id="q2" min="0" max="10" value="5" oninput="calc()"></div>
+<div class="form-group"><label>3. Public WiFi par VPN use karte ho?</label>
+<input type="range" id="q3" min="0" max="10" value="5" oninput="calc()"></div>
+<div class="form-group"><label>4. App permissions regularly check karte ho?</label>
+<input type="range" id="q4" min="0" max="10" value="5" oninput="calc()"></div>
+<div class="form-group"><label>5. Suspicious links click karne se bachte ho?</label>
+<input type="range" id="q5" min="0" max="10" value="5" oninput="calc()"></div>
+</div>
+<div class="awareness-section" style="text-align:center;">
+<h3>📊 Your Privacy Score</h3>
+<div style="font-size:4em;font-family:Orbitron;font-weight:900;color:#00ff9d;text-shadow:0 0 30px #00ff9d;" id="scoreDisplay">50</div>
+<p id="scoreText" style="color:#8b949e;margin-top:10px;">Good - Thoda aur improve karo</p>
+</div>
+</div>
+<a href="{{ url_for('home') }}" class="back-link">← Back to Home</a>
+</div>
+</div>
+<script>
+function calc(){
+var t=0;for(var i=1;i<=5;i++){t+=parseInt(document.getElementById('q'+i).value);}
+var s=Math.round(t/50*100);
+document.getElementById('scoreDisplay').textContent=s;
+var txt=document.getElementById('scoreText');
+if(s>=80){txt.textContent='Excellent! Aap privacy expert ho 🏆';txt.style.color='#00ff9d';}
+else if(s>=60){txt.textContent='Good - Thoda aur improve karo 👍';txt.style.color='#00d4ff';}
+else if(s>=40){txt.textContent='Average - Kai cheezein improve karni hain ⚠️';txt.style.color='#ffa657';}
+else{txt.textContent='Poor - Turant steps uthao! 🚨';txt.style.color='#ff0040';}
+}
+calc();
+</script>
+</body>
+</html>

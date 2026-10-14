@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Advisor | CyberDefender OM</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="auth-container">
+<div class="auth-card" style="max-width:750px;">
+<div class="auth-header">
+<div class="auth-icon">🛡️</div>
+<h1>SECURITY ADVISOR</h1>
+<p>Apne device ki security check karo</p>
+</div>
+<div class="awareness-content" style="margin:20px 0;">
+<div class="awareness-section">
+<h3>✅ 1. Device Security Checklist</h3>
+<ul>
+<li>Screen lock ON hai (PIN/Pattern/Password)</li>
+<li>Auto-update ON hai</li>
+<li>Find My Device ON hai</li>
+<li>2-Factor Authentication ON hai</li>
+<li>Unknown sources OFF hai</li>
+<li>VPN use karte ho public WiFi par</li>
+</ul>
+</div>
+<div class="awareness-section">
+<h3>🔐 2. Password Security</h3>
+<ul>
+<li>Har account ka alag password</li>
+<li>Password Manager use karo (Bitwarden)</li>
+<li>12+ characters, mix of letters/numbers/symbols</li>
+<li>Kabhi kisi ko password mat batao</li>
+<li>Har 6 mahine mein change karo</li>
+</ul>
+</div>
+<div class="awareness-section">
+<h3>📱 3. App Security</h3>
+<ul>
+<li>Sirf Play Store / App Store se install karo</li>
+<li>App permissions check karo (Camera, Location, Contacts)</li>
+<li>Purane apps uninstall karo</li>
+<li>Kisi bhi app ko Accessibility permission mat do</li>
+<li>Unknown APK files mat install karo</li>
+</ul>
+</div>
+<div class="awareness-section emergency">
+<h3>🚨 4. Emergency Actions</h3>
+<ul>
+<li>Fraud hua? Call 1930 (Cyber Helpline)</li>
+<li>Report: cybercrime.gov.in</li>
+<li>Bank ko turant inform karo</li>
+<li>SIM block karwao (agar SIM fraud)</li>
+<li>Screenshots rakho (evidence ke liye)</li>
+</ul>
+</div>
+<div class="awareness-section">
+<h3>🔗 5. Safe Browsing Tips</h3>
+<ul>
+<li>URL check karo before login</li>
+<li>HTTPS (padlock) dekho</li>
+<li>Public WiFi par banking mat karo</li>
+<li>Browser extensions update rakho</li>
+<li>Pop-up ads par click mat karo</li>
+</ul>
+</div>
+</div>
+<a href="{{ url_for('home') }}" class="back-link">← Back to Home</a>
+</div>
+</div>
+</body>
+</html>

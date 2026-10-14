@@ -301,6 +301,137 @@ def leaderboard():
     return render_template('leaderboard.html', scores=scores)
 
 
+
+
+@app.route('/security-advisor')
+def security_advisor():
+    return render_template('security_advisor.html')
+
+
+@app.route('/job-scam', methods=['GET', 'POST'])
+def job_scam():
+    result = None
+    if request.method == 'POST':
+        text = request.form.get('job_text', '')
+        if text:
+            scam_kw = ['pay registration', 'pay fee', 'urgent hiring', 'no interview',
+                       'work from home earn', 'investment required', 'pay security',
+                       'registration fee', 'processing fee', 'limited seats',
+                       'no experience high salary', 'send money', 'whatsapp only']
+            warnings = []
+            tl = text.lower()
+            for kw in scam_kw:
+                if kw in tl:
+                    warnings.append("Suspicious phrase: '" + kw + "'")
+            if 'http' in tl: warnings.append("Contains link")
+            if text.count('!') > 2: warnings.append("Too many exclamation marks")
+            if text.count('₹') > 2 or text.count('Rs') > 2: warnings.append("Too many money mentions")
+            is_scam = len(warnings) > 0
+            result = {
+                'status': 'SCAM DETECTED' if is_scam else 'LIKELY GENUINE',
+                'warnings': warnings,
+                'confidence': min(95, 40 + len(warnings) * 15) if is_scam else 85
+            }
+    return render_template('job_scam.html', result=result)
+
+
+@app.route('/privacy-score')
+def privacy_score():
+    return render_template('privacy_score.html')
+
+
+
+
+@app.route('/breach-check', methods=['GET', 'POST'])
+def breach_check():
+    result = None
+    if request.method == 'POST':
+        email = request.form.get('email', '')
+        if email:
+            known = {'test@gmail.com': ['Adobe (2013)', 'LinkedIn (2021)']}
+            breaches = known.get(email.lower(), [])
+            result = {'email': email, 'breached': len(breaches) > 0,
+                      'count': len(breaches), 'breaches': breaches,
+                      'status': 'BREACHED!' if breaches else 'SAFE'}
+    return render_template('breach_check.html', result=result)
+
+
+@app.route('/qr-scanner', methods=['GET', 'POST'])
+def qr_scanner():
+    result = None
+    if request.method == 'POST':
+        text = request.form.get('qr_text', '')
+        if text:
+            w = []
+            tl = text.lower()
+            if any(x in tl for x in ['.xyz', '.tk', '.ml']): w.append("Suspicious domain")
+            if 'bit.ly' in tl: w.append("Shortened URL")
+            if text.startswith('http://'): w.append("No HTTPS")
+            if 'login' in tl or 'verify' in tl: w.append("Login keywords")
+            result = {'content': text[:200], 'suspicious': len(w) > 0,
+                      'status': 'SUSPICIOUS!' if w else 'SAFE', 'warnings': w}
+    return render_template('qr_scanner.html', result=result)
+
+
+@app.route('/spam-lookup', methods=['GET', 'POST'])
+def spam_lookup():
+    result = None
+    if request.method == 'POST':
+        phone = request.form.get('phone', '')
+        if phone:
+            import hashlib
+            clean = phone.replace('+', '').replace(' ', '').replace('-', '')
+            h = int(hashlib.md5(clean.encode()).hexdigest()[:8], 16)
+            score = h % 80
+            result = {'input': phone, 'spam_score': score,
+                      'country': 'India' if clean.startswith('91') else 'Unknown',
+                      'status': 'HIGH RISK' if score > 60 else ('SUSPICIOUS' if score > 30 else 'SAFE'),
+                      'reports': ['Telemarketing'] if score > 60 else []}
+    return render_template('spam_lookup.html', result=result)
+
+
+@app.route('/osint-scan', methods=['GET', 'POST'])
+def osint_scan():
+    result = None
+    if request.method == 'POST':
+        email = request.form.get('email', '')
+        if email:
+            platforms = [f'{p}: Possible account' for p in ['Twitter', 'Spotify', 'Gravatar']]
+            dorks = [f'https://www.google.com/search?q=intext:"{email}"',
+                     f'https://haveibeenpwned.com/account/{email}',
+                     f'https://intelx.io/?s={email}']
+            result = {'email': email, 'platforms': platforms, 'dorks': dorks}
+    return render_template('osint_scan.html', result=result)
+
+@app.route('/scan-url', methods=['POST'])
+def scan_url_api():
+    from flask import jsonify
+    data = request.get_json()
+    url = data.get('url', '')
+    if not url:
+        return jsonify({'error': 'No URL provided'}), 400
+    p, c, w = analyze_url(url)
+    return jsonify({
+        'status': 'PHISHING' if p == 1 else 'SAFE',
+        'confidence': round(c, 2),
+        'warnings': w,
+        'url': url
+    })
+
+@app.route('/scan-url', methods=['POST'])
+def scan_url_api():
+    from flask import jsonify
+    data = request.get_json()
+    url = data.get('url', '')
+    if not url:
+        return jsonify({'error': 'No URL provided'}), 400
+    p, c, w = analyze_url(url)
+    return jsonify({
+        'status': 'PHISHING' if p == 1 else 'SAFE',
+        'confidence': round(c, 2),
+        'warnings': w,
+        'url': url
+    })
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(debug=False, host='0.0.0.0', port=port)

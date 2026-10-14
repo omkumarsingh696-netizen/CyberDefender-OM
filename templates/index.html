@@ -7,8 +7,41 @@
     <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='logo/cyberdefender_logo.svg') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='cyber-bg.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='attack-map.css') }}">
+    <link rel="manifest" href="/static/manifest.json">
+    <meta name="theme-color" content="#00ff9d">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="CyberDefender">
 </head>
 <body>
+    <!-- === LIVE CYBER ATTACK WORLD MAP === -->
+    <div id="attackMapBg">
+        <canvas id="worldMapCanvas"></canvas>
+        <div class="attack-panel-left">
+            <div class="panel-title">⚠️ LIVE THREAT MONITOR</div>
+            <div class="panel-stat">
+                <div class="stat-big" id="attackCounter">0</div>
+                <div class="stat-sub">ATTACKS BLOCKED</div>
+            </div>
+            <div class="panel-stat">
+                <div class="stat-big red" id="criticalCounter">0</div>
+                <div class="stat-sub">CRITICAL THREATS</div>
+            </div>
+            <div class="panel-stat">
+                <div class="stat-big green" id="countriesCount">0</div>
+                <div class="stat-sub">COUNTRIES TARGETED</div>
+            </div>
+        </div>
+        <div class="attack-feed-right">
+            <div class="feed-title">🔴 LIVE ATTACK FEED</div>
+            <div class="feed-list" id="attackFeed"></div>
+        </div>
+        <div class="scanlines"></div>
+    </div>
+
+    
+
     <div class="cursor-dot"></div>
     <div class="cursor-ring"></div>
 
@@ -24,15 +57,100 @@
             <div class="orb orb-3"></div>
         </div>
         <div class="grid-3d"></div>
-        <!-- === ORIGINAL CSS 3D SKULL === -->
-        <div class="cyber-skull-wrap" id="cyberSkullWrap">
-            <div class="cyber-skull" id="cyberSkull">
-                <div class="cs-cranium"></div>
-                <div class="cs-forehead-plate">
-                    <div class="cs-circuit-h cs-h1"></div>
-                    <div class="cs-circuit-h cs-h2"></div>
-                    <div class="cs-circuit-h cs-h3"></div>
+        <!-- === 3D ROBOTIC SKELETON === -->
+        <div class="skeleton-3d-wrap" id="skeletonWrap">
+            <div class="skeleton-3d" id="skeleton3d">
+                <div class="skull-head">
+                    <div class="skull-cranium"></div>
+                    <div class="skull-forehead">
+                        <div class="circuit-line cl-1"></div>
+                        <div class="circuit-line cl-2"></div>
+                        <div class="circuit-line cl-3"></div>
+                    </div>
+                    <div class="skull-eye left-eye">
+                        <div class="eye-socket"></div>
+                        <div class="eye-glow"></div>
+                        <div class="eye-core"></div>
+                    </div>
+                    <div class="skull-eye right-eye">
+                        <div class="eye-socket"></div>
+                        <div class="eye-glow"></div>
+                        <div class="eye-core"></div>
+                    </div>
+                    <div class="skull-nose">
+                        <div class="nostril nl"></div>
+                        <div class="nostril nr"></div>
+                    </div>
+                    <div class="skull-jaw">
+                        <div class="teeth teeth-up">
+                            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                        </div>
+                        <div class="teeth teeth-down">
+                            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                        </div>
+                    </div>
+                    <div class="skull-ear left-ear">
+                        <div class="ear-ring"></div>
+                        <div class="ear-ring r2"></div>
+                    </div>
+                    <div class="skull-ear right-ear">
+                        <div class="ear-ring"></div>
+                        <div class="ear-ring r2"></div>
+                    </div>
+                    <div class="crown-glow"></div>
+                    <div class="scan-beam"></div>
                 </div>
+            </div>
+        </div>
+
+        <!-- === 3D ROBOTIC SKELETON === -->
+        <div class="skeleton-3d-wrap" id="skeletonWrap">
+            <div class="skeleton-3d" id="skeleton3d">
+                <div class="skull-head">
+                    <div class="skull-cranium"></div>
+                    <div class="skull-forehead">
+                        <div class="circuit-line cl-1"></div>
+                        <div class="circuit-line cl-2"></div>
+                        <div class="circuit-line cl-3"></div>
+                    </div>
+                    <div class="skull-eye left-eye">
+                        <div class="eye-socket"></div>
+                        <div class="eye-glow"></div>
+                        <div class="eye-core"></div>
+                    </div>
+                    <div class="skull-eye right-eye">
+                        <div class="eye-socket"></div>
+                        <div class="eye-glow"></div>
+                        <div class="eye-core"></div>
+                    </div>
+                    <div class="skull-nose">
+                        <div class="nostril nl"></div>
+                        <div class="nostril nr"></div>
+                    </div>
+                    <div class="skull-jaw">
+                        <div class="teeth teeth-up">
+                            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                        </div>
+                        <div class="teeth teeth-down">
+                            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                        </div>
+                    </div>
+                    <div class="skull-ear left-ear">
+                        <div class="ear-ring"></div>
+                        <div class="ear-ring r2"></div>
+                    </div>
+                    <div class="skull-ear right-ear">
+                        <div class="ear-ring"></div>
+                        <div class="ear-ring r2"></div>
+                    </div>
+                    <div class="crown-glow"></div>
+                    <div class="scan-beam"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === ORIGINAL CSS 3D SKULL === -->
+        
                 <div class="cs-temple cs-temple-l"></div>
                 <div class="cs-temple cs-temple-r"></div>
                 <div class="cs-eye cs-eye-l">
@@ -608,7 +726,75 @@
     }
     a();
 })();
-</script></body>
+</script><script>
+(function(){
+    const wrap = document.getElementById('skeletonWrap');
+    const sk = document.getElementById('skeleton3d');
+    if(!wrap || !sk) return;
+    let d=false, sx=0, sy=0, ry=0, rx=0, ar=true, sp=0.4, t;
+    wrap.addEventListener('mousedown',(e)=>{d=true;ar=false;sx=e.clientX;sy=e.clientY;wrap.style.cursor='grabbing';});
+    document.addEventListener('mousemove',(e)=>{
+        if(!d)return;
+        const dx=e.clientX-sx, dy=e.clientY-sy;
+        ry+=dx*0.6; rx-=dy*0.4;
+        rx=Math.max(-45,Math.min(45,rx));
+        sk.style.transform=`rotateY(${ry}deg) rotateX(${rx}deg)`;
+        sx=e.clientX; sy=e.clientY;
+    });
+    document.addEventListener('mouseup',()=>{if(d){d=false;wrap.style.cursor='grab';clearTimeout(t);t=setTimeout(()=>{ar=true;},2000);}});
+    wrap.addEventListener('touchstart',(e)=>{d=true;ar=false;sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+    document.addEventListener('touchmove',(e)=>{
+        if(!d)return;
+        const dx=e.touches[0].clientX-sx, dy=e.touches[0].clientY-sy;
+        ry+=dx*0.6; rx-=dy*0.4;
+        rx=Math.max(-45,Math.min(45,rx));
+        sk.style.transform=`rotateY(${ry}deg) rotateX(${rx}deg)`;
+        sx=e.touches[0].clientX; sy=e.touches[0].clientY;
+    },{passive:true});
+    document.addEventListener('touchend',()=>{d=false;clearTimeout(t);t=setTimeout(()=>{ar=true;},2000);});
+    function a(){
+        if(ar && !d){ ry += sp; sk.style.transform=`rotateY(${ry}deg) rotateX(${rx}deg)`; }
+        requestAnimationFrame(a);
+    }
+    a();
+})();
+</script><script>
+(function(){
+    const wrap = document.getElementById('skeletonWrap');
+    const sk = document.getElementById('skeleton3d');
+    if(!wrap || !sk) return;
+    let d=false, sx=0, sy=0, ry=0, rx=0, ar=true, sp=0.4, t;
+    wrap.addEventListener('mousedown',(e)=>{d=true;ar=false;sx=e.clientX;sy=e.clientY;wrap.style.cursor='grabbing';});
+    document.addEventListener('mousemove',(e)=>{
+        if(!d)return;
+        const dx=e.clientX-sx, dy=e.clientY-sy;
+        ry+=dx*0.6; rx-=dy*0.4;
+        rx=Math.max(-45,Math.min(45,rx));
+        sk.style.transform=`rotateY(${ry}deg) rotateX(${rx}deg)`;
+        sx=e.clientX; sy=e.clientY;
+    });
+    document.addEventListener('mouseup',()=>{if(d){d=false;wrap.style.cursor='grab';clearTimeout(t);t=setTimeout(()=>{ar=true;},2000);}});
+    wrap.addEventListener('touchstart',(e)=>{d=true;ar=false;sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+    document.addEventListener('touchmove',(e)=>{
+        if(!d)return;
+        const dx=e.touches[0].clientX-sx, dy=e.touches[0].clientY-sy;
+        ry+=dx*0.6; rx-=dy*0.4;
+        rx=Math.max(-45,Math.min(45,rx));
+        sk.style.transform=`rotateY(${ry}deg) rotateX(${rx}deg)`;
+        sx=e.touches[0].clientX; sy=e.touches[0].clientY;
+    },{passive:true});
+    document.addEventListener('touchend',()=>{d=false;clearTimeout(t);t=setTimeout(()=>{ar=true;},2000);});
+    function a(){
+        if(ar && !d){ ry += sp; sk.style.transform=`rotateY(${ry}deg) rotateX(${rx}deg)`; }
+        requestAnimationFrame(a);
+    }
+    a();
+})();
+</script>    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="{{ url_for('static', filename='cyber-bg.js') }}"></script>
+    <script src="{{ url_for('static', filename='attack-map.js') }}"></script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/static/sw.js');}</script>
+</body>
 </html>
 
 
