@@ -418,20 +418,5 @@ def scan_url_api():
         'url': url
     })
 
-@app.route('/scan-url', methods=['POST'])
-def scan_url_api():
-    from flask import jsonify
-    data = request.get_json()
-    url = data.get('url', '')
-    if not url:
-        return jsonify({'error': 'No URL provided'}), 400
-    p, c, w = analyze_url(url)
-    return jsonify({
-        'status': 'PHISHING' if p == 1 else 'SAFE',
-        'confidence': round(c, 2),
-        'warnings': w,
-        'url': url
-    })
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(debug=False, host='0.0.0.0', port=port)
+    app.run(debug=True, host='0.0.0.0', port=5000)
