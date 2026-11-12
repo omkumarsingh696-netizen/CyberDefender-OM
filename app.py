@@ -1,4 +1,3 @@
-
 import os
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 import pickle
@@ -82,7 +81,6 @@ QUIZ_QUESTIONS = [
      'explanation': 'Domain "instagram-verify.com" asli Instagram nahi hai. HTTP bhi suspicious hai.'}
 ]
 
-
 def analyze_url(url):
     url_vector = url_vectorizer.transform([url])
     prediction = url_model.predict(url_vector)[0]
@@ -99,7 +97,6 @@ def analyze_url(url):
     if len(url) > 75:
         warnings.append("URL is unusually long")
     return prediction, confidence, warnings
-
 
 def analyze_text(text):
     text_vector = text_vectorizer.transform([text])
@@ -118,7 +115,6 @@ def analyze_text(text):
         warnings.append("Contains link")
     return prediction, confidence, warnings
 
-
 def analyze_code(code):
     warnings = []
     for pattern, name in DANGEROUS_CODE_PATTERNS:
@@ -127,7 +123,6 @@ def analyze_code(code):
     prediction = 1 if warnings else 0
     confidence = 95.0 if warnings else 90.0
     return prediction, confidence, warnings
-
 
 def analyze_image(filename):
     warnings = []
@@ -146,9 +141,7 @@ def analyze_image(filename):
     confidence = 75.0 if warnings else 85.0
     return prediction, confidence, warnings
 
-
 # ========== MAIN ROUTES ==========
-
 @app.route('/', methods=['GET', 'POST'])
 def home():
     result = None
@@ -181,9 +174,7 @@ def home():
                 result = {'type': 'Image Scanner', 'input': filename, 'status': 'SUSPICIOUS IMAGE' if p == 1 else 'SAFE IMAGE', 'confidence': round(c, 2), 'warnings': w}
     return render_template('index.html', result=result, active_tab=active_tab)
 
-
 # ========== AUTH ROUTES ==========
-
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
@@ -204,7 +195,6 @@ def signup():
         return redirect(url_for('login'))
     return render_template('signup.html')
 
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -219,13 +209,11 @@ def login():
         flash('Invalid credentials!', 'error')
     return render_template('login.html')
 
-
 @app.route('/logout')
 def logout():
     session.clear()
     flash('Logged out!', 'success')
     return redirect(url_for('home'))
-
 
 @app.route('/complaint', methods=['GET', 'POST'])
 def complaint():
@@ -243,7 +231,6 @@ def complaint():
         return redirect(url_for('complaint'))
     return render_template('complaint.html')
 
-
 @app.route('/feedback', methods=['GET', 'POST'])
 def feedback():
     if request.method == 'POST':
@@ -259,13 +246,33 @@ def feedback():
         return redirect(url_for('feedback'))
     return render_template('feedback.html')
 
+# ========== ADMIN DASHBOARD ==========
+@app.route('/admin-dashboard')
+def admin_dashboard():
+    all_complaints = Complaint.query.order_by(Complaint.id.desc()).all()
+    all_feedbacks = Feedback.query.order_by(Feedback.id.desc()).all()
+    return render_template('admin_dashboard.html', complaints=all_complaints, feedbacks=all_feedbacks)
+
+@app.route('/delete-complaint/<int:id>')
+def delete_complaint(id):
+    c = Complaint.query.get_or_404(id)
+    db.session.delete(c)
+    db.session.commit()
+    flash('Complaint deleted!', 'success')
+    return redirect(url_for('admin_dashboard'))
+
+@app.route('/delete-feedback/<int:id>')
+def delete_feedback(id):
+    f = Feedback.query.get_or_404(id)
+    db.session.delete(f)
+    db.session.commit()
+    flash('Feedback deleted!', 'success')
+    return redirect(url_for('admin_dashboard'))
 
 # ========== AWARENESS ROUTES ==========
-
 @app.route('/awareness')
 def awareness():
     return render_template('awareness.html')
-
 
 @app.route('/quiz', methods=['GET', 'POST'])
 def quiz():
@@ -294,19 +301,14 @@ def quiz():
         return render_template('quiz_result.html', name=name, score=score, total=total, percentage=percentage, answers=answers)
     return render_template('quiz.html', questions=QUIZ_QUESTIONS)
 
-
 @app.route('/leaderboard')
 def leaderboard():
     scores = QuizResult.query.order_by(QuizResult.percentage.desc()).limit(10).all()
     return render_template('leaderboard.html', scores=scores)
 
-
-
-
 @app.route('/security-advisor')
 def security_advisor():
     return render_template('security_advisor.html')
-
 
 @app.route('/job-scam', methods=['GET', 'POST'])
 def job_scam():
@@ -334,13 +336,9 @@ def job_scam():
             }
     return render_template('job_scam.html', result=result)
 
-
 @app.route('/privacy-score')
 def privacy_score():
     return render_template('privacy_score.html')
-
-
-
 
 @app.route('/breach-check', methods=['GET', 'POST'])
 def breach_check():
@@ -354,7 +352,6 @@ def breach_check():
                       'count': len(breaches), 'breaches': breaches,
                       'status': 'BREACHED!' if breaches else 'SAFE'}
     return render_template('breach_check.html', result=result)
-
 
 @app.route('/qr-scanner', methods=['GET', 'POST'])
 def qr_scanner():
@@ -372,7 +369,6 @@ def qr_scanner():
                       'status': 'SUSPICIOUS!' if w else 'SAFE', 'warnings': w}
     return render_template('qr_scanner.html', result=result)
 
-
 @app.route('/spam-lookup', methods=['GET', 'POST'])
 def spam_lookup():
     result = None
@@ -389,7 +385,6 @@ def spam_lookup():
                       'reports': ['Telemarketing'] if score > 60 else []}
     return render_template('spam_lookup.html', result=result)
 
-
 @app.route('/osint-scan', methods=['GET', 'POST'])
 def osint_scan():
     result = None
@@ -405,7 +400,6 @@ def osint_scan():
 
 @app.route('/scan-url', methods=['POST'])
 def scan_url_api():
-    from flask import jsonify
     data = request.get_json()
     url = data.get('url', '')
     if not url:
